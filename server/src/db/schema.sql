@@ -1,0 +1,9 @@
+DROP TABLE if EXISTS expenses;
+
+CREATE TABLE expenses (
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    description TEXT NOT NULL,
+    amount NUMERIC(10, 2) NOT NULL,
+    category TEXT,
+    date DATE NOT NULL DEFAULT CURRENT_DATE
+)
