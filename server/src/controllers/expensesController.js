@@ -61,4 +61,28 @@ async function createExpense(req, res){
 
 }
 
-module.exports = { getAllExpenses, createExpense};
+async function deleteExpense(req, res) {
+
+    const {id } = req.params;
+
+    if (!id){
+        return res.status(400).json({error: 'id required'});
+    }
+
+    try {
+        const result = await pool.query(
+            'DELETE FROM expenses WHERE id = $1',
+            [id]
+        );
+        if (result.rowCount === 0){
+            return res.status(404).json({error : "expense not found"});
+        }
+        res.status(204).send("Deleted");
+
+    }catch(err){
+        console.log(err);
+        res.status(500).json({error: 'internal server error'});
+    }
+}
+
+module.exports = { getAllExpenses, createExpense, deleteExpense};
